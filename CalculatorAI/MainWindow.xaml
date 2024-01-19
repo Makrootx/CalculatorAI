@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CalculatorAI"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" 
+        xmlns:viewModels="clr-namespace:CalculatorAI.MVVM.ViewModels"
         mc:Ignorable="d"
         Background="Black"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -12,7 +13,11 @@
         TextElement.FontSize="14"
         FontFamily="{materialDesign:RobotoFont}"
         Title="MainWindow" Height="450" Width="800">
+    <Window.DataContext>
+        <viewModels:MainViewModel/>
+    </Window.DataContext>
     <Grid>
+        <ContentControl Content="{Binding CurrentView}"/>
         <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
               Foreground="White"
               Click="HamburgerMainButton_Click"
@@ -50,6 +55,7 @@
                 </ListBox>
 
             </StackPanel>
+        
 
     </Grid>
 </Window>

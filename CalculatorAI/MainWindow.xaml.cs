@@ -18,6 +18,7 @@ using System.Drawing;
 using System.IO;
 using System.Windows.Interop;
 using System.Windows.Media.Animation;
+using CalculatorAI.MVVM.ViewModels;
 
 namespace CalculatorAI
 {
@@ -30,6 +31,8 @@ namespace CalculatorAI
         {
             InitializeComponent();
             //Drawing_Canvas.EditingMode = InkCanvasEditingMode.Ink;
+            MainViewModel viewModel = new MainViewModel();
+            DataContext = viewModel;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -39,16 +42,16 @@ namespace CalculatorAI
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-                DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.7));
-                ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
-                HamburgerButton.IsChecked = false;
-                HamburgerMainButton.IsChecked = false;
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.7));
+            ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
+            HamburgerButton.IsChecked = false;
+            HamburgerMainButton.IsChecked = false;
             
         }
 
         private void HamburgerMainButton_Click(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation anim = new DoubleAnimation(150, TimeSpan.FromSeconds(1));
+            DoubleAnimation anim = new DoubleAnimation(150, TimeSpan.FromSeconds(0.7));
             ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
             HamburgerButton.IsChecked = true;
             HamburgerMainButton.IsChecked = true;

@@ -9,6 +9,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Grey" SecondaryColor="Lime" />
+                <ResourceDictionary Source="Styles/CardElement.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         
