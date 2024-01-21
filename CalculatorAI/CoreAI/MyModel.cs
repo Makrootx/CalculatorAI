@@ -13,7 +13,7 @@ namespace CalculatorAI.CoreAI
 {
     public class MyModel
     {
-        private string modelDir = "C:\\Users\\maksy\\source\\repos\\ModelAI\\ModelAI\\bin\\Debug\\net6.0\\";
+        private string modelDir = "";
         public IModel model;
         private int debugValue = 0;
         public MyModel(string modelName) {
@@ -39,23 +39,23 @@ namespace CalculatorAI.CoreAI
                     ans=ans+" "; 
                 }
                 NDArray input = prepareInput(img);
-                for (int i = 0; i < 28; i++)
-                {
-                    for (int j = 0; j < 28; j++)
-                    {
-                        if ((float)input[i, j, 0] > 0)
-                        {
+                //for (int i = 0; i < 28; i++)
+                //{
+                //    for (int j = 0; j < 28; j++)
+                //    {
+                //        if ((float)input[i, j, 0] > 0)
+                //        {
 
-                            Console.Write("1");
-                        }
-                        else
-                        {
-                            Console.Write(" ");
-                        }
-                        Console.Write(" ");
-                    }
-                    Console.WriteLine();
-                }
+                //            Console.Write("1");
+                //        }
+                //        else
+                //        {
+                //            Console.Write(" ");
+                //        }
+                //        Console.Write(" ");
+                //    }
+                //    Console.WriteLine();
+                //}
                 input = input.reshape((1, 28, 28, 1));
                 var prediction = model.predict(input);
                 prediction = np.argmax(prediction.numpy()[0], -1);

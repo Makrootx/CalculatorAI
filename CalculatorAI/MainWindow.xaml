@@ -82,6 +82,7 @@
                     <ListBoxItem Content="Main Menu"/>
                     <ListBoxItem Content="Calculator"/>
                     <ListBoxItem Content="Battle"/>
+                    <ListBoxItem Content="PlayGround"/>
                 </ListBox>
 
             </StackPanel>

@@ -4,9 +4,112 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:CalculatorAI.MVVM.Views"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1000">
     <Grid>
+        
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="800"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="250"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Playground"
+                       Grid.ColumnSpan="2"
+                       Foreground="#1C1733"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       Margin="0, 20"
+                       FontSize="40" />
+            <Border Grid.Row="1" Margin="20, 0, 0, 0">
+                <Canvas>
+                    <InkCanvas Width="750"
+                               Height="250"
+                               x:Name="Drawing_Canvas"/>
+                </Canvas>
+            </Border>
+
+            <Border Background="MediumPurple"
+                CornerRadius="10"
+                Grid.Column="1"
+                    Grid.Row="1"
+                Margin="10, 0, 10, 0">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="10"/>
+                </Border.Effect>
+                <StackPanel Orientation="Vertical" Grid.Column="3">
+                    <Label Content="Brush size"
+                       Foreground="#1C1733"
+                       HorizontalAlignment="Center"
+                       FontWeight="Bold"
+                       Margin="0, 10, 0, 0"/>
+                    <ComboBox
+        Margin="10, 10"
+        materialDesign:HintAssist.Hint="Size"
+        Style="{StaticResource MaterialDesignOutlinedComboBox}"
+Text=""
+                    SelectionChanged="OutlinedComboBox_SelectionChanged"
+                    x:Name="brushSizeCombobox">
+                        <ComboBoxItem Content="2"/>
+                        <ComboBoxItem Content="5"/>
+                        <ComboBoxItem Content="7"/>
+                        <ComboBoxItem Content="10"/>
+                        <ComboBoxItem Content="12"/>
+                    </ComboBox>
+                    <Label Content="Brush mode"
+                           Foreground="#1C1733"
+                           HorizontalAlignment="Center"
+                           FontWeight="Bold"
+                           Margin="0, 10, 0, 0"/>
+                    <RadioButton Margin="10"
+                             Content="Pen"
+                             x:Name="changeToPen"
+                             Checked="changeToPen_Checked"/>
+                    <RadioButton Margin="10, 0"
+                             Content="Eraser"
+                             x:Name="changeToEraser"
+                             Checked="changeToEraser_Checked"/>
+                </StackPanel>
+            </Border>
+
+            <StackPanel Orientation="Horizontal" Grid.Column="0"
+                        Grid.Row="3" HorizontalAlignment="Center">
+                <Border Height="50" HorizontalAlignment="Stretch"
+                        Background="MediumSeaGreen"
+                        CornerRadius="8"
+                        Margin="10, 0">
+                    <StackPanel Orientation="Horizontal"
+                                x:Name="calculatingStack"
+                                HorizontalAlignment="Center">
+                        <Button Style="{StaticResource PredictBlock}"
+                    Content="Your prediction will be here"/>
+                    </StackPanel>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="3"/>
+                    </Border.Effect>
+                </Border>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" Grid.Row="3"
+                        Grid.Column="1">
+                <Button Content="Get prediction" Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="20, 10"
+                        Click="Button_Click"/>
+                <Button Content="Clear Field" Grid.Row="3"
+                        Grid.Column="1"
+                        Margin="20, 0"
+                        Click="Button_Click_1"/>
+            </StackPanel>
             
+
+
+        </Grid>
+        
+
     </Grid>
 </UserControl>

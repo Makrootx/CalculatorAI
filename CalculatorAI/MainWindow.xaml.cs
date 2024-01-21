@@ -89,6 +89,10 @@ namespace CalculatorAI
                     viewModel.changeToBattleMainView.Execute(null);
                     closeToolBar();
                     break;
+                case 3:
+                    viewModel.changeToPlaygroundView.Execute(null);
+                    closeToolBar();
+                    break;
             }
         }
 

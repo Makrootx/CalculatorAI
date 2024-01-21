@@ -35,5 +35,10 @@ namespace CalculatorAI.MVVM.Views
         {
             ((MainViewModel)DataContext).changeToolbarIndex(2);
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ((MainViewModel)DataContext).changeToolbarIndex(3);
+        }
     }
 }

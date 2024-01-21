@@ -172,6 +172,9 @@
     <Compile Include="MVVM\Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="MVVM\Views\PlayGroundView.xaml.cs">
+      <DependentUpon>PlayGroundView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Services\BitmapService.cs" />
     <Compile Include="Services\CropingService.cs" />
     <Compile Include="Services\PredictionService.cs" />
@@ -211,6 +214,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Views\PlayGroundView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -261,6 +268,7 @@
   <ItemGroup />
   <ItemGroup>
     <Resource Include="Images\477103.png" />
+    <Content Include="Images\beach.svg" />
     <Content Include="Images\Pictogrammers-Material-Sword.svg" />
     <Content Include="Images\sword-svgrepo-com %281%29.svg" />
     <Content Include="Images\sword-svgrepo-com.svg" />

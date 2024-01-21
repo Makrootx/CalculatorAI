@@ -26,6 +26,8 @@ namespace CalculatorAI.MVVM.ViewModels
 
         BattleGameOverScreen BattleGameOverVM { get; set; }
 
+        PlayGroundView PlayGroundVM { get; set; }
+
         private object _currentView;
 
         public object CurrentView
@@ -47,22 +49,13 @@ namespace CalculatorAI.MVVM.ViewModels
         public RelyCommand changeToBattleConclusionView;
         public RelyCommand changeToBattleViewFromConclusion;
         public RelyCommand changeToBattleGameOverView;
+        public RelyCommand changeToPlaygroundView;
 
-
-        public RelyCommand changeToKaraokeScreenView;
-        public RelyCommand changeToSongSelectScreenView;
-        public RelyCommand changeToKaraokeFromSong;
-        //public RelyCommand changeToWriteFile;
-        //public RelyCommand writeFileContent;
-        //public RelyCommand readFileContent;
-
-        //public bool isOpenFileVM()
-        //{
-        //    return CurrentView == OpenFileVM;
-        //}
 
         MyModel myModel;
         ListBox toolBar;
+
+        private bool battleMode=false;
         public MainViewModel(ListBox toolBar)
         {
             this.toolBar=toolBar;
@@ -72,6 +65,7 @@ namespace CalculatorAI.MVVM.ViewModels
             CalculatorVM = new CalculatorView();
             CurrentView = MainVM;
             BattleMainVM=new BatleMainScreen();
+            PlayGroundVM=new PlayGroundView();
             changeToMainView = new RelyCommand(o =>
             {
                 CurrentView = MainVM;
@@ -88,9 +82,11 @@ namespace CalculatorAI.MVVM.ViewModels
             {
                 BattleVM = new BattleScreen();
                 CurrentView = BattleVM;
+                battleMode = true;
             });
             changeToBattleConclusionView = new RelyCommand(o =>
             {
+                BattleVM = null;
                 BattleConclusionVM=new BattleConclusionScreen((BattleInfo)o);
                 CurrentView = BattleConclusionVM;
             });
@@ -101,19 +97,14 @@ namespace CalculatorAI.MVVM.ViewModels
             });
             changeToBattleGameOverView = new RelyCommand(o =>
             {
-                BattleGameOverVM=new BattleGameOverScreen((BattleInfo)o);
+                BattleVM = null;
+                BattleGameOverVM =new BattleGameOverScreen((BattleInfo)o);
                 CurrentView = BattleGameOverVM;
             });
-
-            //StartingScreenVM = new StartingScreenView(lyricsOperator);
-            //SongSelectScreenVM = new SongSelectScreen(lyricsOperator);
-
-            //    WriteFileVM = new WriteFileView();
-            //CurrentView = StartingScreenVM;
-            //changeToStartingScreenView = new RelyCommand(o =>
-            //{
-            //    CurrentView = StartingScreenVM;
-            //});
+            changeToPlaygroundView = new RelyCommand(o =>
+            {
+                CurrentView = PlayGroundVM;
+            });
         }
 
         public string getPrediction(Bitmap[] bitmaps)
@@ -124,6 +115,10 @@ namespace CalculatorAI.MVVM.ViewModels
         public void changeToolbarIndex(int index)
         {
             toolBar.SelectedIndex = index;
+            if (battleMode == true )
+            {
+                BattleVM = null;
+            }
         }
     }
 }

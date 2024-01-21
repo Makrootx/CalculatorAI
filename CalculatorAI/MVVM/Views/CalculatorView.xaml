@@ -119,9 +119,8 @@
                                Margin="0, 10, 0, 0"/>
                         <ComboBox
                 Margin="10, 10"
-                materialDesign:HintAssist.Hint="Some item"
+                materialDesign:HintAssist.Hint="SIze"
                 Style="{StaticResource MaterialDesignOutlinedComboBox}"
-        Text=""
                             SelectionChanged="OutlinedComboBox_SelectionChanged"
                             x:Name="brushSizeCombobox">
                             <ComboBoxItem Content="2"/>
@@ -165,7 +164,7 @@
                         x:Name="calculatingStack"
                         HorizontalAlignment="Center">
                         <Button Style="{StaticResource PredictBlock}"
-                                Content="187"/>
+                                Content="Your calculation will be here"/>
                     </StackPanel>
                     <Border.Effect>
                         <DropShadowEffect BlurRadius="10" ShadowDepth="3"/>
