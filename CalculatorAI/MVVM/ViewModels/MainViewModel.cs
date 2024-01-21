@@ -1,7 +1,9 @@
-﻿using CalculatorAI.MVVM.Core;
+﻿using CalculatorAI.CoreAI;
+using CalculatorAI.MVVM.Core;
 using CalculatorAI.MVVM.Views;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,9 +52,10 @@ namespace CalculatorAI.MVVM.ViewModels
         //    return CurrentView == OpenFileVM;
         //}
 
-
+        MyModel myModel;
         public MainViewModel()
         {
+            myModel = new MyModel("saved_model4");
             MainVM = new MainView();
             CalculatorVM = new CalculatorView();
             CurrentView = MainVM;
@@ -74,6 +77,11 @@ namespace CalculatorAI.MVVM.ViewModels
             //{
             //    CurrentView = StartingScreenVM;
             //});
+        }
+
+        public string getPrediction(Bitmap[] bitmaps)
+        {
+            return myModel.getPredictions(bitmaps);
         }
     }
 }

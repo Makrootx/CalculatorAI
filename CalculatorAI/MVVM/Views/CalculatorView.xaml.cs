@@ -1,4 +1,5 @@
-﻿using CalculatorAI.Services;
+﻿using CalculatorAI.MVVM.ViewModels;
+using CalculatorAI.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -16,6 +17,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Tensorflow;
 
 namespace CalculatorAI.MVVM.Views
 {
@@ -24,23 +26,42 @@ namespace CalculatorAI.MVVM.Views
     /// </summary>
     public partial class CalculatorView : UserControl
     {
+        MainViewModel mainViewModel;
         public CalculatorView()
         {
             InitializeComponent();
+            mainViewModel = (MainViewModel)DataContext;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Bitmap bitmap = getBitmapFromInkCanvas();
-
-            Test.CountDigits(bitmap);
-            addPredictBlock("167");
+            calculatingStack.Children.Clear();
+            var prediction=getPredictionFromInkCanvas(Drawing_Canvas);
+            createPredictBlockAndAnimation(prediction, () =>
+            {
+                prediction =getPredictionFromInkCanvas(Drawing_Canvas2);
+                createPredictBlockAndAnimation(prediction, () =>
+                {
+                    prediction = getPredictionFromInkCanvas(Drawing_Canvas3);
+                    createPredictBlockAndAnimation(prediction);
+                });
+            });
+            
         }
 
-        private Bitmap getBitmapFromInkCanvas()
+        private string getPredictionFromInkCanvas(InkCanvas canvas)
         {
-            RenderTargetBitmap renderBitmap = new RenderTargetBitmap((int)Drawing_Canvas.ActualWidth, (int)Drawing_Canvas.ActualHeight, 96d, 96d, PixelFormats.Default);
-            renderBitmap.Render(Drawing_Canvas);
+            var bitmap = getBitmapFromInkCanvas(canvas);
+            var processedImages = CropingService.GetImages(bitmap);
+            var prediction = ((MainViewModel)DataContext).getPrediction(processedImages);
+            prediction = convertPrediction(prediction);
+            return prediction;
+        }
+
+        private Bitmap getBitmapFromInkCanvas(InkCanvas drawingCanvas)
+        {
+            RenderTargetBitmap renderBitmap = new RenderTargetBitmap((int)drawingCanvas.ActualWidth, (int)drawingCanvas.ActualHeight, 96d, 96d, PixelFormats.Default);
+            renderBitmap.Render(drawingCanvas);
             BitmapSource bitmapSource = renderBitmap;
             Bitmap bitmap;
             using (MemoryStream ms = new MemoryStream())
@@ -53,17 +74,51 @@ namespace CalculatorAI.MVVM.Views
             return bitmap;
         }
 
-        private void addPredictBlock(String content)
+        private Button addPredictBlock(string content)
         {
-            calculatingStack.Children.Clear();
             Button button = new Button();
             TranslateTransform translateTransform = new TranslateTransform(0, 30);
             button.RenderTransform = translateTransform;
             button.Style = (Style)Application.Current.Resources["PredictBlock"];
             button.Content = content;
             calculatingStack.Children.Add(button);
+            return button;
+        }
+
+        private void createPredictBlockAndAnimation(string content, Action onCompleted = null)
+        {
+            Button button = addPredictBlock(content);
             DoubleAnimation doubleAnimation = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
-            translateTransform.BeginAnimation(TranslateTransform.YProperty, doubleAnimation);
+            doubleAnimation.Completed += (sender, e)=>onCompleted?.Invoke();
+            button.RenderTransform.BeginAnimation(TranslateTransform.YProperty, doubleAnimation);
+        }
+
+        private string convertPrediction(string prediction)
+        {
+            string ans="";
+            foreach (var item in prediction.Split(' '))
+            {
+                switch (item)
+                {
+                    case "10":
+                        ans += "+";
+                        break;
+                    case "11":
+                        ans += "-";
+                        break;
+                    case "12":
+                        ans += "*";
+                        break;
+                    case "13":
+                        ans += "/";
+                        break;
+                    default:
+                        ans+=item;
+                        break;
+                }
+            }
+            return ans;
+            
         }
     }
 }

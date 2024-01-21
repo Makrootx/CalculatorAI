@@ -9,7 +9,7 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock Text="Calculator"
-                        Foreground="White"
+                        Foreground="#1C1733"
                          FontWeight="Bold"
                          HorizontalAlignment="Center"
                          Margin="0, 20"
@@ -20,33 +20,58 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Canvas Margin="10"
-                        Grid.Column="0">
-                    <InkCanvas HorizontalAlignment="Center"
-                               x:Name="Drawing_Canvas"
-                               Width="180"
-                               Height="180"/>
-                </Canvas>
-                <Canvas Margin="10,10,10,10"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Grid.Column="1">
-                    <InkCanvas Canvas.Bottom="-90"
-                               Canvas.Right="-90"
-                               x:Name="Drawing_Canvas2"
-                               Width="180"
-                               Height="180"/>
-                </Canvas>
-                <Canvas Margin="10,10,10,10"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Grid.Column="2">
-                    <InkCanvas Canvas.Bottom="-90"
-                               Canvas.Right="-90"
-                               x:Name="Drawing_Canvas3"
-                               Width="180"
-                               Height="180"/>
-                </Canvas>
+                <Border CornerRadius="10"
+                        Background="#817EA5"
+                        Margin="30, 0">
+                    <Canvas Margin="10"
+                            Grid.Column="0"
+                            Width="180"
+                            Height="180">
+                        <InkCanvas HorizontalAlignment="Center"
+                                   x:Name="Drawing_Canvas"
+                                   Width="180"
+                                   Height="180"/>
+                    </Canvas>
+                    <Border.Effect>
+                        <DropShadowEffect/>
+                    </Border.Effect>
+                </Border>
+
+                <Border CornerRadius="10"
+                        Background="#817EA5"
+                        Margin="30, 0"
+                        Grid.Column="1"
+                        >
+                    <Canvas Margin="10"
+                            Width="180"
+                            Height="180">
+                        <InkCanvas HorizontalAlignment="Center"
+                                   x:Name="Drawing_Canvas2"
+                                   Width="180"
+                                   Height="180"/>
+                    </Canvas>
+                    <Border.Effect>
+                        <DropShadowEffect/>
+                    </Border.Effect>
+                </Border>
+
+                <Border CornerRadius="10"
+                        Background="#817EA5"
+                        Margin="30, 0"
+                        Grid.Column="2"
+                        >   
+                    <Canvas Margin="10"
+                            Width="180"
+                            Height="180">
+                        <InkCanvas HorizontalAlignment="Center"
+                                   x:Name="Drawing_Canvas3"
+                                   Width="180"
+                                   Height="180"/>
+                    </Canvas>
+                    <Border.Effect>
+                        <DropShadowEffect/>
+                    </Border.Effect>
+                </Border>
 
             </Grid>
             <StackPanel Orientation="Horizontal"
@@ -62,42 +87,9 @@
                     <StackPanel Orientation="Horizontal"
                                 x:Name="calculatingStack"
                                 HorizontalAlignment="Center">
-                        <Border Background="MediumVioletRed"
-                                CornerRadius="10"
-                                Margin="7">
-                            <TextBlock Text="17"
-                                       Margin="10, 0"
-                                   VerticalAlignment="Center"
-                                   HorizontalAlignment="Center"
-                                   FontSize="18"
-                                   FontWeight="Bold"
-                                   Foreground="White"/>
-                        </Border>
-                        <Border Background="MediumSeaGreen"
-                                
-                                CornerRadius="10"
-                                Margin="7">
-                            <TextBlock Text="+"
-                                       Margin="15, 0"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       FontSize="18"
-                                       FontWeight="Bold"
-                                       Foreground="White"/>
-                        </Border>
-                        <Border Background="MediumVioletRed"
-                                CornerRadius="10"
-                                Margin="7">
-                            <TextBlock Text="195"
-                                       Margin="10, 0"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Center"
-                                       FontSize="18"
-                                       FontWeight="Bold"
-                                       Foreground="White"/>
-                        </Border>
-                        <!--<Button Style="{StaticResource PredictBlock}"
-                                Content="198"/>-->
+
+                        <Button Style="{StaticResource PredictBlock}"
+                                Content="198"/>
                     </StackPanel>
                 </Border>
             </StackPanel>

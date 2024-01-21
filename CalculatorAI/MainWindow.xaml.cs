@@ -31,6 +31,7 @@ namespace CalculatorAI
         bool isColapsed = false;
         public MainWindow()
         {
+
             InitializeComponent();
             //Drawing_Canvas.EditingMode = InkCanvasEditingMode.Ink;
             viewModel = new MainViewModel();
@@ -86,6 +87,26 @@ namespace CalculatorAI
                     closeToolBar();
                     break;
             }
+        }
+
+        private void CloseBut_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ResizeBut_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MinimizeBut_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
+        }
+
+        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DragMove();
         }
 
         //private void Button_Click_1(object sender, RoutedEventArgs e)

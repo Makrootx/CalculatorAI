@@ -11,6 +11,7 @@
                 <materialDesign:BundledTheme BaseTheme="Dark" PrimaryColor="Grey" SecondaryColor="Lime" />
                 <ResourceDictionary Source="Styles/CardElement.xaml"/>
                 <ResourceDictionary Source="Styles/PredictBlock.xaml"/>
+                <ResourceDictionary Source="Styles/TitleBarButtons.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         
