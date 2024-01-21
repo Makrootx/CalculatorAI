@@ -14,10 +14,9 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="{materialDesign:RobotoFont}"
-        Title="MainWindow" Height="450" Width="800">
-    <Window.DataContext>
-        <viewModels:MainViewModel/>
-    </Window.DataContext>
+        ResizeMode="CanResizeWithGrip"
+        Title="MainWindow" Height="450" Width="1000">
+    
     <Grid Background="#776CFA">
         <Grid.RowDefinitions>
             <RowDefinition Height="26"/>
@@ -82,6 +81,7 @@
                     </ListBox.Resources>
                     <ListBoxItem Content="Main Menu"/>
                     <ListBoxItem Content="Calculator"/>
+                    <ListBoxItem Content="Battle"/>
                 </ListBox>
 
             </StackPanel>

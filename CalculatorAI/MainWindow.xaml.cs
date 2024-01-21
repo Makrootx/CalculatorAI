@@ -34,10 +34,9 @@ namespace CalculatorAI
 
             InitializeComponent();
             //Drawing_Canvas.EditingMode = InkCanvasEditingMode.Ink;
-            viewModel = new MainViewModel();
+            viewModel = new MainViewModel(ToolBarItems);
             DataContext = viewModel;
             ToolBarItems.SelectedIndex = 0;
-            
 
         }
 
@@ -84,6 +83,10 @@ namespace CalculatorAI
                     break;
                 case 1:
                     viewModel.changeToCalculatorView.Execute(null);
+                    closeToolBar();
+                    break;
+                case 2:
+                    viewModel.changeToBattleMainView.Execute(null);
                     closeToolBar();
                     break;
             }

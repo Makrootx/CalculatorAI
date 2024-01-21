@@ -149,17 +149,34 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="CoreAI\MyModel.cs" />
+    <Compile Include="MVVM\Core\BattleInfo.cs" />
+    <Compile Include="MVVM\Core\BattleQuestion.cs" />
     <Compile Include="MVVM\Core\ObservableObject.cs" />
     <Compile Include="MVVM\Core\RelyCommand.cs" />
     <Compile Include="MVVM\ViewModels\MainViewModel.cs" />
+    <Compile Include="MVVM\Views\BatleMainScreen.xaml.cs">
+      <DependentUpon>BatleMainScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Views\BattleConclusionScreen.xaml.cs">
+      <DependentUpon>BattleConclusionScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Views\BattleGameOverScreen.xaml.cs">
+      <DependentUpon>BattleGameOverScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Views\BattleScreen.xaml.cs">
+      <DependentUpon>BattleScreen.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\Views\CalculatorView.xaml.cs">
       <DependentUpon>CalculatorView.xaml</DependentUpon>
     </Compile>
     <Compile Include="MVVM\Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\BitmapService.cs" />
     <Compile Include="Services\CropingService.cs" />
+    <Compile Include="Services\PredictionService.cs" />
     <Compile Include="Services\Test.cs" />
+    <Compile Include="Styles\BattleOptionProperties.cs" />
     <Compile Include="Styles\CardElementProperties.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -169,16 +186,35 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="CoreAI\TestModelAI.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MVVM\Views\BatleMainScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Views\BattleConclusionScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Views\BattleGameOverScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MVVM\Views\BattleScreen.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\Views\CalculatorView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\BattleOption.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -224,6 +260,12 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Images\477103.png" />
+    <Content Include="Images\Pictogrammers-Material-Sword.svg" />
+    <Content Include="Images\sword-svgrepo-com %281%29.svg" />
+    <Content Include="Images\sword-svgrepo-com.svg" />
+    <Content Include="MVVM\Core\plus-svgrepo-com.svg" />
+    <Content Include="MVVM\Core\sword.svg" />
     <Resource Include="MVVM\Core\calculator-svgrepo-com.png" />
     <Content Include="MVVM\Core\calculator-svgrepo-com.svg" />
     <Resource Include="MVVM\Core\Без названия.png" />

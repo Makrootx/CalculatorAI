@@ -1,99 +1,178 @@
 ﻿<UserControl x:Class="CalculatorAI.MVVM.Views.CalculatorView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:CalculatorAI.MVVM.Views"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:CalculatorAI.MVVM.Views"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    mc:Ignorable="d"
+    d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Orientation="Vertical">
             <TextBlock Text="Calculator"
-                        Foreground="#1C1733"
-                         FontWeight="Bold"
-                         HorizontalAlignment="Center"
-                         Margin="0, 20"
-                         FontSize="40"/>
-            <Grid Height="200">
+                Foreground="#1C1733"
+                FontWeight="Bold"
+                HorizontalAlignment="Center"
+                Margin="0, 20"
+                FontSize="40" />
+            <Grid Height="250">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="130"/>
                 </Grid.ColumnDefinitions>
-                <Border CornerRadius="10"
-                        Background="#817EA5"
+                <StackPanel>
+                    <Border CornerRadius="10"
+                        Background="MediumPurple"
                         Margin="30, 0">
-                    <Canvas Margin="10"
+                        <Canvas Margin="10"
                             Grid.Column="0"
                             Width="180"
                             Height="180">
-                        <InkCanvas HorizontalAlignment="Center"
-                                   x:Name="Drawing_Canvas"
-                                   Width="180"
-                                   Height="180"/>
-                    </Canvas>
-                    <Border.Effect>
-                        <DropShadowEffect/>
-                    </Border.Effect>
-                </Border>
+                            <InkCanvas HorizontalAlignment="Center"
+                                x:Name="Drawing_Canvas"
+                                Width="180"
+                                Height="180"/>
+                        </Canvas>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="5"/>
+                        </Border.Effect>
+                    </Border>
+                    <Button Width="60"
+                            Height="30"
+                            Margin="10"
+                            x:Name="ClearCanvas1But"
+                            Click="ClearCanvas1But_Click">
+                        <materialDesign:PackIcon Kind="Delete"
+                            Width="25"
+                            Height="25"/>
+                    </Button>
+                </StackPanel>
 
-                <Border CornerRadius="10"
-                        Background="#817EA5"
-                        Margin="30, 0"
-                        Grid.Column="1"
-                        >
-                    <Canvas Margin="10"
-                            Width="180"
-                            Height="180">
-                        <InkCanvas HorizontalAlignment="Center"
-                                   x:Name="Drawing_Canvas2"
-                                   Width="180"
-                                   Height="180"/>
-                    </Canvas>
-                    <Border.Effect>
-                        <DropShadowEffect/>
-                    </Border.Effect>
-                </Border>
+                <StackPanel Grid.Column="1">
+                    <Border CornerRadius="10"
+                            Background="MediumPurple"
+                            Margin="30, 0">
+                        <Canvas Margin="10"
+                                Width="180"
+                                Height="180">
+                            <InkCanvas HorizontalAlignment="Center"
+                                       x:Name="Drawing_Canvas2"
+                                       Width="180"
+                                       Height="180"/>
+                        </Canvas>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="5"/>
+                        </Border.Effect>
+                    </Border>
+                    <Button Width="60"
+                            Height="30"
+                            Margin="10"
+                            x:Name="ClearCanvas2But"
+                            Click="ClearCanvas2But_Click">
+                        <materialDesign:PackIcon Kind="Delete"
+                                                 Width="25"
+                                                 Height="25"/>
+                    </Button>
+                </StackPanel>
 
-                <Border CornerRadius="10"
-                        Background="#817EA5"
-                        Margin="30, 0"
-                        Grid.Column="2"
-                        >   
-                    <Canvas Margin="10"
-                            Width="180"
-                            Height="180">
-                        <InkCanvas HorizontalAlignment="Center"
-                                   x:Name="Drawing_Canvas3"
-                                   Width="180"
-                                   Height="180"/>
-                    </Canvas>
+                <StackPanel Grid.Column="2">
+                    <Border CornerRadius="10"
+                            Background="MediumPurple"
+                            Margin="30, 0">
+                        <Canvas Margin="10"
+                                Width="180"
+                                Height="180">
+                            <InkCanvas HorizontalAlignment="Center"
+                                       x:Name="Drawing_Canvas3"
+                                       Width="180"
+                                       Height="180"/>
+                        </Canvas>
+                        <Border.Effect>
+                            <DropShadowEffect BlurRadius="10" ShadowDepth="5"/>
+                        </Border.Effect>
+                    </Border>
+                    <Button Width="60"
+                            Height="30"
+                            Margin="10"
+                            x:Name="ClearCanvas3But"
+                            Click="ClearCanvas3But_Click">
+                        <materialDesign:PackIcon Kind="Delete"
+                                                 Width="25"
+                                                 Height="25"/>
+                    </Button>
+                </StackPanel>
+
+                <Border Background="MediumPurple"
+                        CornerRadius="10"
+                        Grid.Column="3"
+                        Margin="10, 0, 10, 30">
                     <Border.Effect>
-                        <DropShadowEffect/>
+                        <DropShadowEffect BlurRadius="10"/>
                     </Border.Effect>
+                    <StackPanel Orientation="Vertical" Grid.Column="3">
+                        <Label Content="Brush size"
+                               Foreground="#1C1733"
+                               HorizontalAlignment="Center"
+                               FontWeight="Bold"
+                               Margin="0, 10, 0, 0"/>
+                        <ComboBox
+                Margin="10, 10"
+                materialDesign:HintAssist.Hint="Some item"
+                Style="{StaticResource MaterialDesignOutlinedComboBox}"
+        Text=""
+                            SelectionChanged="OutlinedComboBox_SelectionChanged"
+                            x:Name="brushSizeCombobox">
+                            <ComboBoxItem Content="2"/>
+                            <ComboBoxItem Content="5"/>
+                            <ComboBoxItem Content="7"/>
+                            <ComboBoxItem Content="10"/>
+                            <ComboBoxItem Content="12"/>
+                        </ComboBox>
+                        <Label Content="Brush mode"
+                                   Foreground="#1C1733"
+                                   HorizontalAlignment="Center"
+                                   FontWeight="Bold"
+                                   Margin="0, 10, 0, 0"/>
+                        <RadioButton Margin="10"
+                                     Content="Pen"
+                                     x:Name="changeToPen"
+                                     Checked="changeToPen_Checked"/>
+                        <RadioButton Margin="10, 0"
+                                     Content="Eraser"
+                                     x:Name="changeToEraser"
+                                     Checked="changeToEraser_Checked"/>
+                    </StackPanel>
                 </Border>
+                
+                
+                
 
             </Grid>
             <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Center"
-                        Margin="0, 20">
+                HorizontalAlignment="Center"
+                Margin="0, 20">
                 <Button Content="Click"
-                        Click="Button_Click"
-                        Margin="10, 0"/>
-                <Border Height="50" Width="300"
-                        Background="MediumTurquoise"
-                        CornerRadius="8"
-                        Margin="10, 0">
+                    Click="Button_Click"
+                    Margin="10, 0" 
+                        x:Name="GetPredictionBut"/>
+                <Border Height="50" HorizontalAlignment="Stretch"
+                    Background="MediumSeaGreen"
+                    CornerRadius="8"
+                    Margin="10, 0">
                     <StackPanel Orientation="Horizontal"
-                                x:Name="calculatingStack"
-                                HorizontalAlignment="Center">
-
+                        x:Name="calculatingStack"
+                        HorizontalAlignment="Center">
                         <Button Style="{StaticResource PredictBlock}"
-                                Content="198"/>
+                                Content="187"/>
                     </StackPanel>
+                    <Border.Effect>
+                        <DropShadowEffect BlurRadius="10" ShadowDepth="3"/>
+                    </Border.Effect>
                 </Border>
             </StackPanel>
-            
+
         </StackPanel>
     </Grid>
 </UserControl>

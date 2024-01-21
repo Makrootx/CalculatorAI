@@ -1,5 +1,6 @@
 ﻿using CalculatorAI.MVVM.ViewModels;
 using CalculatorAI.Services;
+using DocumentFormat.OpenXml.Office2010.Drawing;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -27,98 +29,211 @@ namespace CalculatorAI.MVVM.Views
     public partial class CalculatorView : UserControl
     {
         MainViewModel mainViewModel;
+
+        SolidColorBrush defaultColor;
+        SolidColorBrush errorColor;
+        SolidColorBrush defaultNumberColor;
+        SolidColorBrush defaultOperationColor;
+
+        int[] sizeMap = new int[] { 5, 7, 10, 12 };
         public CalculatorView()
         {
             InitializeComponent();
             mainViewModel = (MainViewModel)DataContext;
+            defaultColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 255, 255, 255));
+            errorColor = new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, 255, 0, 0));
+            defaultNumberColor = new SolidColorBrush(System.Windows.Media.Colors.PaleVioletRed);
+            defaultOperationColor = new SolidColorBrush(System.Windows.Media.Colors.PaleGreen);
+
+            changeToPen.IsChecked = true;
+            brushSizeCombobox.SelectedIndex = 0;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            GetPredictionBut.IsEnabled = false;
             calculatingStack.Children.Clear();
-            var prediction=getPredictionFromInkCanvas(Drawing_Canvas);
-            createPredictBlockAndAnimation(prediction, () =>
+            string[] predictions=new string[3];
+            var prediction=PredictionService.getPredictionFromInkCanvas(Drawing_Canvas);
+            predictions[0] = prediction;
+            SolidColorBrush color;
+            color = (PredictionService.isNumber(prediction)) ? defaultNumberColor : errorColor;
+            createPredictBlockAndAnimation(prediction, color, () =>
             {
-                prediction =getPredictionFromInkCanvas(Drawing_Canvas2);
-                createPredictBlockAndAnimation(prediction, () =>
+                prediction = PredictionService.getPredictionFromInkCanvas(Drawing_Canvas2);
+                predictions[1] = prediction;
+                color = (PredictionService.isOperation(prediction)) ? defaultOperationColor : errorColor;
+                createPredictBlockAndAnimation(prediction, color, () =>
                 {
-                    prediction = getPredictionFromInkCanvas(Drawing_Canvas3);
-                    createPredictBlockAndAnimation(prediction);
+                    prediction = PredictionService.getPredictionFromInkCanvas(Drawing_Canvas3);
+                    predictions[2] = prediction;
+                    color = (PredictionService.isNumber(prediction)) ? defaultNumberColor : errorColor;
+                    createPredictBlockAndAnimation(prediction, color, () =>
+                    {
+                        try
+                        {
+                            double ans=makeCalculatin(predictions);
+                            createPredictBlockAndAnimation("=", defaultOperationColor, () =>
+                            {
+                                createPredictBlockAndAnimation(ans.ToString(), defaultNumberColor);
+                                GetPredictionBut.IsEnabled = true;
+                            });
+                            
+                        }
+                        catch (ArgumentException ex)
+                        {
+                            GetPredictionBut.IsEnabled = true;
+                        }
+                    });
                 });
             });
             
         }
 
-        private string getPredictionFromInkCanvas(InkCanvas canvas)
+        private double makeCalculatin(string[] predictions)
         {
-            var bitmap = getBitmapFromInkCanvas(canvas);
-            var processedImages = CropingService.GetImages(bitmap);
-            var prediction = ((MainViewModel)DataContext).getPrediction(processedImages);
-            prediction = convertPrediction(prediction);
-            return prediction;
-        }
-
-        private Bitmap getBitmapFromInkCanvas(InkCanvas drawingCanvas)
-        {
-            RenderTargetBitmap renderBitmap = new RenderTargetBitmap((int)drawingCanvas.ActualWidth, (int)drawingCanvas.ActualHeight, 96d, 96d, PixelFormats.Default);
-            renderBitmap.Render(drawingCanvas);
-            BitmapSource bitmapSource = renderBitmap;
-            Bitmap bitmap;
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                PngBitmapEncoder pngEncoder = new PngBitmapEncoder();
-                pngEncoder.Frames.Add(BitmapFrame.Create(renderBitmap));
-                pngEncoder.Save(ms);
-                bitmap = new Bitmap(ms);
+                int a = PredictionService.getNumberFromPrediction(predictions[0]);
+                int b = PredictionService.getNumberFromPrediction(predictions[2]);
+                double ans;
+                switch (predictions[1])
+                {
+                    case "+":
+                        ans = a + b;
+                        break;
+                    case "-":
+                        ans = a - b;
+                        break;
+                    case "*":
+                        ans = a * b;
+                        break;
+                    case "/":
+                        ans = a / b;
+                        break;
+                    default: throw new ArgumentException("Operation is invalid");
+                }
+                return ans;
             }
-            return bitmap;
+            catch (ArgumentException e)
+            {
+                throw new ArgumentException(e.Message);
+            }
+            
         }
 
-        private Button addPredictBlock(string content)
+        private Button addPredictBlock(string content, SolidColorBrush color)
         {
             Button button = new Button();
             TranslateTransform translateTransform = new TranslateTransform(0, 30);
             button.RenderTransform = translateTransform;
             button.Style = (Style)Application.Current.Resources["PredictBlock"];
             button.Content = content;
+            if(color==null)
+                button.Background = defaultColor;
+            else
+                button.Background = color;
             calculatingStack.Children.Add(button);
             return button;
         }
 
-        private void createPredictBlockAndAnimation(string content, Action onCompleted = null)
+        private void createPredictBlockAndAnimation(string content, SolidColorBrush color=null, Action onCompleted = null)
         {
-            Button button = addPredictBlock(content);
-            DoubleAnimation doubleAnimation = new DoubleAnimation(0, TimeSpan.FromSeconds(1));
+            Button button = addPredictBlock(content, color);
+            DoubleAnimation doubleAnimation = new DoubleAnimation(0, TimeSpan.FromSeconds(0.2));
             doubleAnimation.Completed += (sender, e)=>onCompleted?.Invoke();
             button.RenderTransform.BeginAnimation(TranslateTransform.YProperty, doubleAnimation);
         }
 
-        private string convertPrediction(string prediction)
+        private void ClearCanvas3But_Click(object sender, RoutedEventArgs e)
         {
-            string ans="";
-            foreach (var item in prediction.Split(' '))
-            {
-                switch (item)
-                {
-                    case "10":
-                        ans += "+";
-                        break;
-                    case "11":
-                        ans += "-";
-                        break;
-                    case "12":
-                        ans += "*";
-                        break;
-                    case "13":
-                        ans += "/";
-                        break;
-                    default:
-                        ans+=item;
-                        break;
-                }
-            }
-            return ans;
+            clearCanvas(Drawing_Canvas3);
+        }
+
+        private void clearCanvas(InkCanvas inkCanvas)
+        {
+            inkCanvas.Strokes.Clear();
+        }
+
+        private void ClearCanvas2But_Click(object sender, RoutedEventArgs e)
+        {
+            clearCanvas(Drawing_Canvas2);
+        }
+
+        private void ClearCanvas1But_Click(object sender, RoutedEventArgs e)
+        {
+            clearCanvas(Drawing_Canvas);
+        }
+
+        private void OutlinedComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string sizeStr = brushSizeCombobox.SelectedItem.ToString();
+            int size = int.Parse(sizeStr.Split(' ')[1]);
+
+            changeBrushSize(size);
+        }
+
+        private void changeBrushSize(int newSize)
+        {
+            DrawingAttributes drawingAttributes = Drawing_Canvas.DefaultDrawingAttributes;
+
+            // Change properties as needed
+            // Change pen color
+            drawingAttributes.Width = newSize;                 // Change pen thickness
+            drawingAttributes.Height = newSize;                 // Change pen height
+            drawingAttributes.FitToCurve = true;          // Enable or disable fit-to-curve behavior
+            //drawingAttributes.StylusTip = StylusTip.Ellipse;
+            setBrushToAllCanvas(drawingAttributes);
             
+        }
+
+        private void setBrushToAllCanvas(DrawingAttributes drawingAttributes)
+        {
+            Drawing_Canvas.DefaultDrawingAttributes = drawingAttributes;
+            Drawing_Canvas2.DefaultDrawingAttributes = drawingAttributes;
+            Drawing_Canvas3.DefaultDrawingAttributes = drawingAttributes;
+        }
+
+        private void changeBrushToEraser(DrawingAttributes drawingAttributes)
+        {
+            System.Windows.Media.Color transparentColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
+
+            var size= drawingAttributes.Width;
+            // Set the DrawingAttributes to use the transparent color
+            DrawingAttributes eraserAttributes = new DrawingAttributes
+            {
+                Color = transparentColor,
+                StylusTip = StylusTip.Rectangle, // You can use other tip shapes if desired
+                Width = size,  // Set the width of the eraser
+                Height = size  // Set the height of the eraser
+            };
+
+            setBrushToAllCanvas(eraserAttributes);
+        }
+
+        private void changeBrushToPen(DrawingAttributes drawingAttributes)
+        {
+            var size = drawingAttributes.Width;
+            // Set the DrawingAttributes to use the transparent color
+            DrawingAttributes eraserAttributes = new DrawingAttributes
+            {
+                Color = Colors.Black,
+                StylusTip = StylusTip.Ellipse, // You can use other tip shapes if desired
+                Width = size,  // Set the width of the eraser
+                Height = size  // Set the height of the eraser
+            };
+
+            setBrushToAllCanvas(eraserAttributes);
+        }
+
+        private void changeToPen_Checked(object sender, RoutedEventArgs e)
+        {
+            changeBrushToPen(Drawing_Canvas.DefaultDrawingAttributes);
+        }
+
+        private void changeToEraser_Checked(object sender, RoutedEventArgs e)
+        {
+            changeBrushToEraser(Drawing_Canvas.DefaultDrawingAttributes);
         }
     }
 }

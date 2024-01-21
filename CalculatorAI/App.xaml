@@ -12,6 +12,7 @@
                 <ResourceDictionary Source="Styles/CardElement.xaml"/>
                 <ResourceDictionary Source="Styles/PredictBlock.xaml"/>
                 <ResourceDictionary Source="Styles/TitleBarButtons.xaml"/>
+                <ResourceDictionary Source="Styles/BattleOption.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

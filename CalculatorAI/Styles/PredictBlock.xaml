@@ -10,12 +10,15 @@
                                 CornerRadius="10"
                                 Margin="7">
                             <TextBlock Text="{TemplateBinding Content}"
-                                       Margin="10, 0"
+                                       Margin="15, 0"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Center"
                                        FontSize="18"
                                        FontWeight="Bold"
                                        Foreground="{TemplateBinding Foreground}"/>
+                            <Border.Effect>
+                                <DropShadowEffect BlurRadius="6" ShadowDepth="2"/>
+                            </Border.Effect>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>

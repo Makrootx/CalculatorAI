@@ -1,4 +1,5 @@
-﻿using CalculatorAI.MVVM.ViewModels;
+﻿using CalculatorAI.MVVM.Core;
+using CalculatorAI.MVVM.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,21 +18,21 @@ using System.Windows.Shapes;
 namespace CalculatorAI.MVVM.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainView.xaml
+    /// Логика взаимодействия для BattleGameOverScreen.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class BattleGameOverScreen : UserControl
     {
-        public MainView()
+        public BattleGameOverScreen(BattleInfo battleInfo)
         {
             InitializeComponent();
+            Score.Text = battleInfo.score.ToString();
         }
 
-        private void CaclulatorViewBut_Click(object sender, RoutedEventArgs e)
+        private void RetryBut_Click(object sender, RoutedEventArgs e)
         {
-            ((MainViewModel)DataContext).changeToolbarIndex(1);
+            ((MainViewModel)DataContext).changeToBattleView.Execute(null);
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackBut_Click(object sender, RoutedEventArgs e)
         {
             ((MainViewModel)DataContext).changeToolbarIndex(2);
         }

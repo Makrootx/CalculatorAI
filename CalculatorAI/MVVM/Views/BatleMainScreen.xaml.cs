@@ -17,23 +17,18 @@ using System.Windows.Shapes;
 namespace CalculatorAI.MVVM.Views
 {
     /// <summary>
-    /// Логика взаимодействия для MainView.xaml
+    /// Логика взаимодействия для BatleMainScreen.xaml
     /// </summary>
-    public partial class MainView : UserControl
+    public partial class BatleMainScreen : UserControl
     {
-        public MainView()
+        public BatleMainScreen()
         {
             InitializeComponent();
         }
 
-        private void CaclulatorViewBut_Click(object sender, RoutedEventArgs e)
-        {
-            ((MainViewModel)DataContext).changeToolbarIndex(1);
-        }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ((MainViewModel)DataContext).changeToolbarIndex(2);
+            ((MainViewModel)DataContext).changeToBattleView.Execute(null);
         }
     }
 }

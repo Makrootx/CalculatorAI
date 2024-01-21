@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CalculatorAI.Services;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -67,7 +68,7 @@ namespace CalculatorAI.CoreAI
         private NDArray prepareInput(Bitmap bitmap)
         {
             NDArray input = new NDArray((28, 28, 1), dtype: Tensorflow.TF_DataType.TF_FLOAT);
-            Bitmap scaledDown = scaleDownBitmap(bitmap, 28, 28);
+            Bitmap scaledDown = BitmapService.scaleDownBitmap(bitmap, 28, 28);
             scaledDown.Save("outputs/outputScaled" + debugValue++ + ".png");
             for (int i = 0; i < 28; i++)
             {
@@ -86,19 +87,6 @@ namespace CalculatorAI.CoreAI
                 }
             }
             return input;
-        }
-
-        private Bitmap scaleDownBitmap(Bitmap bitmap, int newWidth, int newHeight)
-        {
-            Bitmap scaledDown = new Bitmap(newWidth, newHeight);
-            bitmap.Save("originalBitmap.png");
-            using (Graphics g = Graphics.FromImage(scaledDown))
-            {
-                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
-                g.DrawImage(bitmap, 0, 0, newWidth, newHeight);
-            }
-            scaledDown.Save("scaledDownImage.png");
-            return scaledDown;
         }
     }
 }
