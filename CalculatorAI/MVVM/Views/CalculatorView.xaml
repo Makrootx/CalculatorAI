@@ -1,0 +1,107 @@
+﻿<UserControl x:Class="CalculatorAI.MVVM.Views.CalculatorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CalculatorAI.MVVM.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <TextBlock Text="Calculator"
+                        Foreground="White"
+                         FontWeight="Bold"
+                         HorizontalAlignment="Center"
+                         Margin="0, 20"
+                         FontSize="40"/>
+            <Grid Height="200">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Canvas Margin="10"
+                        Grid.Column="0">
+                    <InkCanvas HorizontalAlignment="Center"
+                               x:Name="Drawing_Canvas"
+                               Width="180"
+                               Height="180"/>
+                </Canvas>
+                <Canvas Margin="10,10,10,10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Grid.Column="1">
+                    <InkCanvas Canvas.Bottom="-90"
+                               Canvas.Right="-90"
+                               x:Name="Drawing_Canvas2"
+                               Width="180"
+                               Height="180"/>
+                </Canvas>
+                <Canvas Margin="10,10,10,10"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Grid.Column="2">
+                    <InkCanvas Canvas.Bottom="-90"
+                               Canvas.Right="-90"
+                               x:Name="Drawing_Canvas3"
+                               Width="180"
+                               Height="180"/>
+                </Canvas>
+
+            </Grid>
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Margin="0, 20">
+                <Button Content="Click"
+                        Click="Button_Click"
+                        Margin="10, 0"/>
+                <Border Height="50" Width="300"
+                        Background="MediumTurquoise"
+                        CornerRadius="8"
+                        Margin="10, 0">
+                    <StackPanel Orientation="Horizontal"
+                                x:Name="calculatingStack"
+                                HorizontalAlignment="Center">
+                        <Border Background="MediumVioletRed"
+                                CornerRadius="10"
+                                Margin="7">
+                            <TextBlock Text="17"
+                                       Margin="10, 0"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   Foreground="White"/>
+                        </Border>
+                        <Border Background="MediumSeaGreen"
+                                
+                                CornerRadius="10"
+                                Margin="7">
+                            <TextBlock Text="+"
+                                       Margin="15, 0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                        </Border>
+                        <Border Background="MediumVioletRed"
+                                CornerRadius="10"
+                                Margin="7">
+                            <TextBlock Text="195"
+                                       Margin="10, 0"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Center"
+                                       FontSize="18"
+                                       FontWeight="Bold"
+                                       Foreground="White"/>
+                        </Border>
+                        <!--<Button Style="{StaticResource PredictBlock}"
+                                Content="198"/>-->
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+</UserControl>

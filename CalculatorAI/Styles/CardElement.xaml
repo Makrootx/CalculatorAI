@@ -11,8 +11,10 @@
                             <Border Width="{TemplateBinding Width}"
                                     Height="{TemplateBinding Height}"
                                     CornerRadius="20"
-                                    Background="#222222">
-                                    <Border.RenderTransform>
+                                    Background="#000000"
+                                    Visibility="Hidden">
+                                
+                                <Border.RenderTransform>
                                         <TranslateTransform X="6" Y="6"/>
                                     </Border.RenderTransform>
                             </Border>
@@ -22,6 +24,9 @@
                                 CornerRadius="20"
                                 Padding="20"
                                 Cursor="Hand">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="10" ShadowDepth="5"/>
+                                </Border.Effect>
                                 <Border.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform x:Name="scale"/>
@@ -29,11 +34,21 @@
                                     </TransformGroup>
                                 </Border.RenderTransform>
 
-                                <Image Source="{TemplateBinding styles:CardElementProperties.MyImageSource}">
+                                <!--<Image Source="{TemplateBinding styles:CardElementProperties.MyImageSource}"
+                                       RenderTransformOrigin="0.5, 0.5">
                                 <Image.RenderTransform>
-                                    <RotateTransform CenterX="30" CenterY="40" x:Name="imageRot"/>
+                                    <RotateTransform x:Name="imageRot"/>
                                 </Image.RenderTransform>
-                            </Image>
+                                    
+                            </Image>-->
+                                <Viewbox>
+                                    <Path Fill="{TemplateBinding Foreground}" Data="{TemplateBinding styles:CardElementProperties.MyPathData}"
+                                          RenderTransformOrigin="0.5, 0.5">
+                                        <Path.RenderTransform>
+                                            <RotateTransform x:Name="imageRot"/>
+                                        </Path.RenderTransform>
+                                    </Path>
+                                </Viewbox>
                         </Border>
                             
                             
@@ -47,7 +62,7 @@
                                                 <DoubleAnimation Storyboard.TargetProperty="ScaleY" Storyboard.TargetName="scale" To="1.05" Duration="0:0:0.3"/>
                                                 <DoubleAnimation Storyboard.TargetProperty="X" Storyboard.TargetName="trans" To="-10" Duration="0:0:0.3"/>
                                                 <DoubleAnimation Storyboard.TargetProperty="Y" Storyboard.TargetName="trans" To="-10" Duration="0:0:0.3"/>
-                                                <DoubleAnimation Storyboard.TargetProperty="Angle" Storyboard.TargetName="imageRot" To="15" Duration="0:0:0.4"/>
+                                                <DoubleAnimation Storyboard.TargetProperty="Angle" Storyboard.TargetName="imageRot" To="20" Duration="0:0:0.4"/>
                                         </Storyboard>
                                         </BeginStoryboard>
                                     </Trigger.EnterActions>

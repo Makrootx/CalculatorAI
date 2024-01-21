@@ -27,12 +27,17 @@ namespace CalculatorAI
     /// </summary>
     public partial class MainWindow : Window
     {
+        MainViewModel viewModel;
+        bool isColapsed = false;
         public MainWindow()
         {
             InitializeComponent();
             //Drawing_Canvas.EditingMode = InkCanvasEditingMode.Ink;
-            MainViewModel viewModel = new MainViewModel();
+            viewModel = new MainViewModel();
             DataContext = viewModel;
+            ToolBarItems.SelectedIndex = 0;
+            
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -42,19 +47,45 @@ namespace CalculatorAI
 
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
-            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.7));
-            ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
-            HamburgerButton.IsChecked = false;
-            HamburgerMainButton.IsChecked = false;
+            if (HamburgerButton.IsChecked==false) { 
+                DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.7));
+                ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
+                DoubleAnimation animForHamburger = new DoubleAnimation(50, TimeSpan.FromSeconds(0.7));
+                pomp.BeginAnimation(Border.WidthProperty, animForHamburger);
+            }
+            else
+            {
+                DoubleAnimation anim = new DoubleAnimation(150, TimeSpan.FromSeconds(0.7));
+                ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
+                DoubleAnimation animForHamburger = new DoubleAnimation(0, TimeSpan.FromSeconds(0.7));
+                pomp.BeginAnimation(Border.WidthProperty, animForHamburger);
+            }
+            //isColapsed = (isColapsed)? false: true;
             
         }
 
-        private void HamburgerMainButton_Click(object sender, RoutedEventArgs e)
+        private void closeToolBar()
         {
-            DoubleAnimation anim = new DoubleAnimation(150, TimeSpan.FromSeconds(0.7));
+            DoubleAnimation anim = new DoubleAnimation(0, TimeSpan.FromSeconds(0.7));
             ToolBar.BeginAnimation(StackPanel.WidthProperty, anim);
-            HamburgerButton.IsChecked = true;
-            HamburgerMainButton.IsChecked = true;
+            DoubleAnimation animForHamburger = new DoubleAnimation(50, TimeSpan.FromSeconds(0.7));
+            pomp.BeginAnimation(Border.WidthProperty, animForHamburger);
+            HamburgerButton.IsChecked = false;
+        }
+
+        private void ToolBarItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            switch (ToolBarItems.SelectedIndex)
+            {
+                case 0:
+                    viewModel.changeToMainView.Execute(null);
+                    closeToolBar();
+                    break;
+                case 1:
+                    viewModel.changeToCalculatorView.Execute(null);
+                    closeToolBar();
+                    break;
+            }
         }
 
         //private void Button_Click_1(object sender, RoutedEventArgs e)

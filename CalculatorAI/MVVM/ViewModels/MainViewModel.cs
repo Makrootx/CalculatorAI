@@ -18,6 +18,8 @@ namespace CalculatorAI.MVVM.ViewModels
 
         MainView MainVM {  get; set; }
 
+        CalculatorView CalculatorVM { get; set; }
+
         private object _currentView;
 
         public object CurrentView
@@ -32,7 +34,10 @@ namespace CalculatorAI.MVVM.ViewModels
             }
         }
 
-        public RelyCommand changeToStartingScreenView;
+        public RelyCommand changeToMainView;
+        public RelyCommand changeToCalculatorView;
+
+
         public RelyCommand changeToKaraokeScreenView;
         public RelyCommand changeToSongSelectScreenView;
         public RelyCommand changeToKaraokeFromSong;
@@ -49,7 +54,17 @@ namespace CalculatorAI.MVVM.ViewModels
         public MainViewModel()
         {
             MainVM = new MainView();
+            CalculatorVM = new CalculatorView();
             CurrentView = MainVM;
+            changeToMainView = new RelyCommand(o =>
+            {
+                CurrentView = MainVM;
+            });
+            changeToCalculatorView = new RelyCommand(o =>
+            {
+                CurrentView = CalculatorVM;
+            });
+
             //StartingScreenVM = new StartingScreenView(lyricsOperator);
             //SongSelectScreenVM = new SongSelectScreen(lyricsOperator);
 

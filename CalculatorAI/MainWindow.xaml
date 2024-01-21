@@ -18,43 +18,41 @@
     </Window.DataContext>
     <Grid>
         <ContentControl Content="{Binding CurrentView}"/>
-        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
-              Foreground="White"
-              Click="HamburgerMainButton_Click"
-                      HorizontalAlignment="Left"
-                x:Name="HamburgerMainButton"
-                VerticalAlignment="Top"
-                Margin="8, 12, 0, 0"/>
-        <StackPanel HorizontalAlignment="Left" Orientation="Vertical"
-                    Width="150"
-                    Margin="8, 12"
-                    x:Name="ToolBar"
-                    Background="#333333">
-                <StackPanel Orientation="Horizontal">
-                    <Label Content="CalculatorAI"
-                           FontSize="17"/>
-                <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
-                              Foreground="White"
-                              Click="HamburgerButton_Click"
-                              IsChecked="True"
-                                x:Name="HamburgerButton"
-                                VerticalAlignment="Top"
-                                Margin="0, 0, 0, 0"
-                                DockPanel.Dock="Right"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+            <StackPanel HorizontalAlignment="Left" Orientation="Vertical"
+            Width="0"
+            Margin="8, 12"
+            x:Name="ToolBar"
+            Background="#333333">
 
-            </StackPanel>
-                <ListBox x:Name="DemoItemsListBox"
-                     Margin="0,16,0,16"
-                     Style="{StaticResource MaterialDesignNavigationPrimaryListBox}"
-                     >
+                <Label Content="CalculatorAI"
+                   FontSize="17"/>
+                <ListBox x:Name="ToolBarItems"
+                         
+             Margin="0,16,0,16"
+                 SelectionChanged="ToolBarItems_SelectionChanged"
+             Style="{StaticResource MaterialDesignNavigationPrimaryListBox}"
+             >
                     <ListBox.Resources>
                         <Style TargetType="ScrollBar" BasedOn="{StaticResource MaterialDesignScrollBarMinimal}" />
                     </ListBox.Resources>
-                    <ListBoxItem Content="Hello"/>
+                    <ListBoxItem Content="Main Menu"/>
                     <ListBoxItem Content="Calculator"/>
                 </ListBox>
 
             </StackPanel>
+            <Border Width="50" x:Name="pomp"/>
+            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}"
+                          Foreground="White"
+                          Click="HamburgerButton_Click"
+                          IsChecked="False"
+                          x:Name="HamburgerButton"
+                          VerticalAlignment="Top"
+                          Margin="-70, 10, 0, 0"
+                          DockPanel.Dock="Right"
+                          Cursor="Hand"/>
+        </StackPanel>
+        
         
 
     </Grid>

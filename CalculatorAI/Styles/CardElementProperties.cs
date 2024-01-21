@@ -23,5 +23,18 @@ namespace CalculatorAI.Styles
         {
             return (ImageSource)dp.GetValue(MyImageSourceProperty);
         }
+
+        public static readonly DependencyProperty MyPathDataProperty=
+            DependencyProperty.RegisterAttached("MyPathData", typeof(Geometry), typeof(CardElementProperties));
+
+        public static void SetMyPathData(DependencyObject d, Geometry value)
+        {
+            d.SetValue(MyPathDataProperty, value);
+        }
+
+        public static Geometry GetMyPathData(DependencyObject dp)
+        {
+            return (Geometry)dp.GetValue(MyPathDataProperty);
+        }
     }
 }
