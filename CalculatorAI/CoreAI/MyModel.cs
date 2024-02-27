@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,8 @@ namespace CalculatorAI.CoreAI
 {
     public class MyModel
     {
-        private string modelDir = "";
+        private static string baseDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+        private string modelDir = Path.Combine(baseDirectory, "public");
         public IModel model;
         private int debugValue = 0;
         public MyModel(string modelName) {
@@ -22,7 +24,7 @@ namespace CalculatorAI.CoreAI
 
         private void loadModelFromDir(string modelName)
         {
-            model=keras.models.load_model(modelDir + modelName);
+            model=keras.models.load_model(Path.Combine(modelDir, modelName));
             model.compile(keras.optimizers.Adam(),
                 keras.losses.SparseCategoricalCrossentropy(from_logits: true), metrics: new[] { "accuracy" });
         }
@@ -39,23 +41,7 @@ namespace CalculatorAI.CoreAI
                     ans=ans+" "; 
                 }
                 NDArray input = prepareInput(img);
-                //for (int i = 0; i < 28; i++)
-                //{
-                //    for (int j = 0; j < 28; j++)
-                //    {
-                //        if ((float)input[i, j, 0] > 0)
-                //        {
-
-                //            Console.Write("1");
-                //        }
-                //        else
-                //        {
-                //            Console.Write(" ");
-                //        }
-                //        Console.Write(" ");
-                //    }
-                //    Console.WriteLine();
-                //}
+                debugInput(input);
                 input = input.reshape((1, 28, 28, 1));
                 var prediction = model.predict(input);
                 prediction = np.argmax(prediction.numpy()[0], -1);
@@ -63,6 +49,27 @@ namespace CalculatorAI.CoreAI
                 first = true;
             }
             return ans;
+        }
+
+        private void debugInput(NDArray input)
+        {
+            for (int i = 0; i < 28; i++)
+            {
+                for (int j = 0; j < 28; j++)
+                {
+                    if ((float)input[i, j, 0] > 0)
+                    {
+
+                        Console.Write("1");
+                    }
+                    else
+                    {
+                        Console.Write(" ");
+                    }
+                    Console.Write(" ");
+                }
+                Console.WriteLine();
+            }
         }
 
         private NDArray prepareInput(Bitmap bitmap)
@@ -80,6 +87,11 @@ namespace CalculatorAI.CoreAI
                         pixel = System.Drawing.Color.FromArgb(255, 255, (255 - pixel.G), (255 - pixel.B));
                     }
                     pixel = System.Drawing.Color.FromArgb(255, (255 - pixel.R), (255 - pixel.G), (255 - pixel.B));
+
+                    if (pixel.R > 120)
+                    {
+                        pixel = System.Drawing.Color.FromArgb(255, 255, 0, 0);
+                    }
 
                     float pixelValue = pixel.R / 255.0f;
 

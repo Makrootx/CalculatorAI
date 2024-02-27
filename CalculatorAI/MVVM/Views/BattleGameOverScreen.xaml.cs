@@ -34,7 +34,7 @@ namespace CalculatorAI.MVVM.Views
         }
         private void BackBut_Click(object sender, RoutedEventArgs e)
         {
-            ((MainViewModel)DataContext).changeToolbarIndex(2);
+            ((MainViewModel)DataContext).changeToolbarIndex(0);
         }
     }
 }

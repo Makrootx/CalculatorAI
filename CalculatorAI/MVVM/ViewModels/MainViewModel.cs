@@ -59,7 +59,7 @@ namespace CalculatorAI.MVVM.ViewModels
         public MainViewModel(ListBox toolBar)
         {
             this.toolBar=toolBar;
-            myModel = new MyModel("saved_model4");
+            myModel = new MyModel("saved_model1a");
             PredictionService.Model = myModel;
             MainVM = new MainView();
             CalculatorVM = new CalculatorView();
