@@ -40,11 +40,6 @@ namespace CalculatorAI
 
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Test.CountDigits("1.png");
-        }
-
         private void HamburgerButton_Click(object sender, RoutedEventArgs e)
         {
             if (HamburgerButton.IsChecked==false) { 

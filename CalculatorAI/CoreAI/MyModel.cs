@@ -41,7 +41,6 @@ namespace CalculatorAI.CoreAI
                     ans=ans+" "; 
                 }
                 NDArray input = prepareInput(img);
-                debugInput(input);
                 input = input.reshape((1, 28, 28, 1));
                 var prediction = model.predict(input);
                 prediction = np.argmax(prediction.numpy()[0], -1);
@@ -51,7 +50,7 @@ namespace CalculatorAI.CoreAI
             return ans;
         }
 
-        private void debugInput(NDArray input)
+        private void debugOutput(NDArray input)
         {
             for (int i = 0; i < 28; i++)
             {
@@ -76,7 +75,6 @@ namespace CalculatorAI.CoreAI
         {
             NDArray input = new NDArray((28, 28, 1), dtype: Tensorflow.TF_DataType.TF_FLOAT);
             Bitmap scaledDown = BitmapService.scaleDownBitmap(bitmap, 28, 28);
-            scaledDown.Save("outputs/outputScaled" + debugValue++ + ".png");
             for (int i = 0; i < 28; i++)
             {
                 for (int j = 0; j < 28; j++)

@@ -68,13 +68,7 @@ namespace CalculatorAI.Services
                     g.DrawImage(image, new Rectangle(adjustValue / 2, addValue / 2, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
                 }
             }
-
-            // Save the image with bounding boxes
-            imagePreprocessed.Save("output_image.png");
             return imagePreprocessed;
-
-            // Return the count of detected digits
-
         }
 
         public static Bitmap[] GetImages(Bitmap imag_orig)
@@ -110,8 +104,6 @@ namespace CalculatorAI.Services
                     g.FillRectangle(brush, supRect);
                     g.DrawImage(imag_orig, new Rectangle(adjustWidth / 2, adjustHeight / 2, rect.Width, rect.Height), rect, GraphicsUnit.Pixel);
                 }
-                //Bitmap readyBitmap= invertFilter.Apply(imageProcessed);
-                imageProcessed.Save("outputs/outputs" + i + ".png");
                 i++;
                 imagesProcessed.Add(imageProcessed);
             }

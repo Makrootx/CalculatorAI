@@ -19,7 +19,6 @@ namespace CalculatorAI.Services
         {
             RenderTargetBitmap renderBitmap = new RenderTargetBitmap((int)drawingCanvas.ActualWidth, (int)drawingCanvas.ActualHeight, 96d, 96d, PixelFormats.Default);
             renderBitmap.Render(drawingCanvas);
-            //BitmapSource bitmapSource = renderBitmap;
             Bitmap bitmap;
             using (MemoryStream ms = new MemoryStream())
             {
@@ -34,13 +33,11 @@ namespace CalculatorAI.Services
         public static Bitmap scaleDownBitmap(Bitmap bitmap, int newWidth, int newHeight)
         {
             Bitmap scaledDown = new Bitmap(newWidth, newHeight);
-            bitmap.Save("originalBitmap.png");
             using (Graphics g = Graphics.FromImage(scaledDown))
             {
                 g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
                 g.DrawImage(bitmap, 0, 0, newWidth, newHeight);
             }
-            scaledDown.Save("scaledDownImage.png");
             return scaledDown;
         }
     }
