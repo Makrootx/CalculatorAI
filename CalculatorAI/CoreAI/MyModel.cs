@@ -1,11 +1,7 @@
 ﻿using CalculatorAI.Services;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Tensorflow.Keras.Engine;
 using Tensorflow.NumPy;
 using static Tensorflow.KerasApi;
@@ -18,13 +14,21 @@ namespace CalculatorAI.CoreAI
         private string modelDir = Path.Combine(baseDirectory, "public");
         public IModel model;
         private int debugValue = 0;
-        public MyModel(string modelName) {
+        public MyModel(string modelName)
+        {
             loadModelFromDir(modelName);
         }
 
         private void loadModelFromDir(string modelName)
         {
-            model=keras.models.load_model(Path.Combine(modelDir, modelName));
+            try
+            {
+                model = keras.models.load_model(Path.Combine(modelDir, modelName));
+            }
+            catch (IOException e)
+            {
+                model = keras.models.load_model(modelName);
+            }
             model.compile(keras.optimizers.Adam(),
                 keras.losses.SparseCategoricalCrossentropy(from_logits: true), metrics: new[] { "accuracy" });
         }
@@ -38,7 +42,7 @@ namespace CalculatorAI.CoreAI
             {
                 if (first)
                 {
-                    ans=ans+" "; 
+                    ans = ans + " ";
                 }
                 NDArray input = prepareInput(img);
                 input = input.reshape((1, 28, 28, 1));
