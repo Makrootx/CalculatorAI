@@ -10,8 +10,7 @@ namespace CalculatorAI.CoreAI
 {
     public class MyModel
     {
-        private static string baseDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
-        private string modelDir = Path.Combine(baseDirectory, "public");
+        private static string baseDirectory;
         public IModel model;
         private int debugValue = 0;
         public MyModel(string modelName)
@@ -23,9 +22,15 @@ namespace CalculatorAI.CoreAI
         {
             try
             {
+                baseDirectory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName;
+                string modelDir = Path.Combine(baseDirectory, "public");
                 model = keras.models.load_model(Path.Combine(modelDir, modelName));
             }
             catch (IOException e)
+            {
+                model = keras.models.load_model(modelName);
+            }
+            catch(Exception e)
             {
                 model = keras.models.load_model(modelName);
             }
