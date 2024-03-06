@@ -43,7 +43,8 @@
                         Height="30"
                         Margin="10"
                         x:Name="ClearCanvas1But"
-                        Click="ClearCanvas1But_Click">
+                        Click="ClearCanvas1But_Click"
+                        materialDesign:ButtonAssist.CornerRadius="6">
                         <materialDesign:PackIcon Kind="Delete"
                             Width="25"
                             Height="25" />
@@ -70,7 +71,8 @@
                         Height="30"
                         Margin="10"
                         x:Name="ClearCanvas2But"
-                        Click="ClearCanvas2But_Click">
+                        Click="ClearCanvas2But_Click"
+                        materialDesign:ButtonAssist.CornerRadius="6">
                         <materialDesign:PackIcon Kind="Delete"
                             Width="25"
                             Height="25" />
