@@ -153,9 +153,9 @@
                 HorizontalAlignment="Center"
                 Margin="0, 20">
                 <Button Content="Click"
-                    Click="Button_Click"
-                    Margin="10, 0" 
-                        x:Name="GetPredictionBut"/>
+                        x:Name="GetAnswerBut"
+                    Click="GetAnswerBut_Click"
+                    Margin="10, 0" />
                 <Border Height="50" HorizontalAlignment="Stretch"
                     Background="MediumSeaGreen"
                     CornerRadius="8"

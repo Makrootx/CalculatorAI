@@ -52,8 +52,6 @@ namespace CalculatorAI.MVVM.Views
             sword = Geometry.Parse("M220.24219,35.75732A5.99827,5.99827,0,0,0,216,34h-.01855l-63.79883.20117a5.9993,5.9993,0,0,0-4.60742,2.17871L75.77808,123.292l-9.87867-9.8789a14.02057,14.02057,0,0,0-19.7998.001L33.415,126.09961a13.99961,13.99961,0,0,0-.001,19.7998l20.8877,20.8877a2.00282,2.00282,0,0,1,0,2.82812L24.36035,199.55664a14.015,14.015,0,0,0,0,19.79883l12.28418,12.28418a13.99963,13.99963,0,0,0,19.79883,0l29.94141-29.94141h.001a1.99809,1.99809,0,0,1,2.82715,0l20.8877,20.88867a14.02057,14.02057,0,0,0,19.7998-.001L142.585,209.90039a13.99961,13.99961,0,0,0,.001-19.7998l-9.87842-9.87842,86.9126-71.79737a5.99991,5.99991,0,0,0,2.17871-4.60693L222,40.01855A6.00065,6.00065,0,0,0,220.24219,35.75732Zm-86.1416,162.82959a1.99693,1.99693,0,0,1-.001,2.82715L121.415,214.09961a2.00222,2.00222,0,0,1-2.8291.001L97.69922,193.21338a13.999,13.999,0,0,0-19.79883-.00049L47.958,223.1543a1.99929,1.99929,0,0,1-2.82813,0L32.8457,210.87012a2.00193,2.00193,0,0,1-.001-2.82813l29.94238-29.9414a14.01674,14.01674,0,0,0,0-19.79883l-20.8877-20.88867a1.99693,1.99693,0,0,1,.001-2.82715L54.585,121.90039a2.004,2.004,0,0,1,2.83008-.001l14.50513,14.50538.01562.01562Zm75.707-97.62109L124.184,171.69824l-15.69861-15.69873,55.75684-55.75683a5.99971,5.99971,0,1,0-8.48438-8.48536l-55.75732,55.75733L84.30188,131.81592l70.7323-85.62354,54.94727-.17334Z");
             health = Geometry.Parse("M41.267,18.557H26.832V4.134C26.832,1.851,24.99,0,22.707,0c-2.283,0-4.124,1.851-4.124,4.135v14.432H4.141c-2.283,0-4.139,1.851-4.138,4.135c-0.001,1.141,0.46,2.187,1.207,2.934c0.748,0.749,1.78,1.222,2.92,1.222h14.453V41.27c0,1.142,0.453,2.176,1.201,2.922c0.748,0.748,1.777,1.211,2.919,1.211c2.282,0,4.129-1.851,4.129-4.133V26.857h14.435c2.283,0,4.134-1.867,4.133-4.15C45.399,20.425,43.548,18.557,41.267,18.557z");
             setUpPen();
-            //addQuestionToPanel(new BattleQuestion(random));
-
             for (int i = 0; i < 3; i++)
             {
                 createQuestion();
@@ -126,7 +124,6 @@ namespace CalculatorAI.MVVM.Views
                     
                     animateGone(battleQuestions[i], () =>
                     {
-                        
                         QuestionPanel.Children.Remove(battleQuestionToRemove.stackPanel);
                         battleQuestions.Remove(battleQuestionToRemove);
                         createQuestion();
@@ -138,7 +135,6 @@ namespace CalculatorAI.MVVM.Views
 
         private void setHealth(int enemyHealth, int userHealth)
         {
-            var width= enemyHealth * FullEnemyHealth.ActualWidth / 100;
             ActualEnemyHealth.Width = enemyHealth * FullEnemyHealth.ActualWidth / 100;
             ActualUserHealth.Width = userHealth * FullUserHealth.ActualWidth / 100;
         }
@@ -148,11 +144,11 @@ namespace CalculatorAI.MVVM.Views
             enemyHealth -= damage;
             if (enemyHealth < 0)
             {
+                timer.Stop();
                 ((MainViewModel)DataContext).changeToBattleConclusionView.Execute(new BattleInfo(userHealth, gameScore));
             }
             else
             {
-
                 ActualEnemyHealth.Width= enemyHealth*FullEnemyHealth.ActualWidth/100;
             }
         }
@@ -161,11 +157,11 @@ namespace CalculatorAI.MVVM.Views
             userHealth -= damage;
             if (userHealth < 0)
             {
+                timer.Stop();
                 ((MainViewModel)DataContext).changeToBattleGameOverView.Execute(new BattleInfo(userHealth, gameScore));
             }
             else
             {
-
                 ActualUserHealth.Width = userHealth * FullUserHealth.ActualWidth / 100;
             }
         }
@@ -200,7 +196,7 @@ namespace CalculatorAI.MVVM.Views
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            setHealth(userHealth, enemyHealth);
+            setHealth(enemyHealth, userHealth);
             timer = new DispatcherTimer();
             timer.Interval = TimeSpan.FromSeconds(5); 
             timer.Tick += Timer_Tick;

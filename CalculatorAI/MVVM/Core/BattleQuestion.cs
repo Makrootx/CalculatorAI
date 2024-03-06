@@ -42,6 +42,7 @@ namespace CalculatorAI.MVVM.Core
             if (random.Next(10) > 7)
             {
                 setFields(new int[] { a, b }, '*');
+                value =(int)(value* 1.5); 
             }
             else
             {

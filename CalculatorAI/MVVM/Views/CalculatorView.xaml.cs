@@ -49,9 +49,9 @@ namespace CalculatorAI.MVVM.Views
             brushSizeCombobox.SelectedIndex = 0;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void GetAnswerBut_Click(object sender, RoutedEventArgs e)
         {
-            GetPredictionBut.IsEnabled = false;
+            GetAnswerBut.IsEnabled = false;
             calculatingStack.Children.Clear();
             string[] predictions=new string[3];
             var prediction=PredictionService.getPredictionFromInkCanvas(Drawing_Canvas);
@@ -72,17 +72,17 @@ namespace CalculatorAI.MVVM.Views
                     {
                         try
                         {
-                            double ans=makeCalculatin(predictions);
+                            double ans=makeCalculation(predictions);
                             createPredictBlockAndAnimation("=", defaultOperationColor, () =>
                             {
                                 createPredictBlockAndAnimation(ans.ToString(), defaultNumberColor);
-                                GetPredictionBut.IsEnabled = true;
+                                GetAnswerBut.IsEnabled = true;
                             });
                             
                         }
                         catch (ArgumentException ex)
                         {
-                            GetPredictionBut.IsEnabled = true;
+                            GetAnswerBut.IsEnabled = true;
                         }
                     });
                 });
@@ -90,7 +90,7 @@ namespace CalculatorAI.MVVM.Views
             
         }
 
-        private double makeCalculatin(string[] predictions)
+        private double makeCalculation(string[] predictions)
         {
             try
             {
@@ -176,13 +176,9 @@ namespace CalculatorAI.MVVM.Views
         private void changeBrushSize(int newSize)
         {
             DrawingAttributes drawingAttributes = Drawing_Canvas.DefaultDrawingAttributes;
-
-            // Change properties as needed
-            // Change pen color
-            drawingAttributes.Width = newSize;                 // Change pen thickness
-            drawingAttributes.Height = newSize;                 // Change pen height
-            drawingAttributes.FitToCurve = true;          // Enable or disable fit-to-curve behavior
-            //drawingAttributes.StylusTip = StylusTip.Ellipse;
+            drawingAttributes.Width = newSize;
+            drawingAttributes.Height = newSize;
+            drawingAttributes.FitToCurve = true;
             setBrushToAllCanvas(drawingAttributes);
             
         }
@@ -199,13 +195,12 @@ namespace CalculatorAI.MVVM.Views
             System.Windows.Media.Color transparentColor = System.Windows.Media.Color.FromArgb(0, 0, 0, 0);
 
             var size= drawingAttributes.Width;
-            // Set the DrawingAttributes to use the transparent color
             DrawingAttributes eraserAttributes = new DrawingAttributes
             {
                 Color = transparentColor,
-                StylusTip = StylusTip.Rectangle, // You can use other tip shapes if desired
-                Width = size,  // Set the width of the eraser
-                Height = size  // Set the height of the eraser
+                StylusTip = StylusTip.Rectangle,
+                Width = size,
+                Height = size
             };
 
             setBrushToAllCanvas(eraserAttributes);
@@ -214,15 +209,13 @@ namespace CalculatorAI.MVVM.Views
         private void changeBrushToPen(DrawingAttributes drawingAttributes)
         {
             var size = drawingAttributes.Width;
-            // Set the DrawingAttributes to use the transparent color
             DrawingAttributes eraserAttributes = new DrawingAttributes
             {
                 Color = Colors.Black,
-                StylusTip = StylusTip.Ellipse, // You can use other tip shapes if desired
-                Width = size,  // Set the width of the eraser
-                Height = size  // Set the height of the eraser
+                StylusTip = StylusTip.Ellipse,
+                Width = size,
+                Height = size
             };
-
             setBrushToAllCanvas(eraserAttributes);
         }
 
@@ -235,5 +228,9 @@ namespace CalculatorAI.MVVM.Views
         {
             changeBrushToEraser(Drawing_Canvas.DefaultDrawingAttributes);
         }
+
+        
+
     }
+    
 }
